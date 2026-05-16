@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matthew Lucia — Organic Warm</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0e1f0d;
+      --bg2:     #0a1809;
+      --surface: rgba(242,234,214,.05);
+      --border:  rgba(242,234,214,.12);
+      --cream:   #f2ead6;
+      --cream2:  rgba(242,234,214,.55);
+      --amber:   #d4a843;
+      --leaf:    #6bc46d;
+      --rust:    #c4613a;
+      --font-d:  'Fraunces', Georgia, serif;
+      --font-b:  'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: var(--font-b);
+      font-size: 17px;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.3rem 3rem;
+      background: rgba(14,31,13,.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+    }
+
+    .nav-name {
+      font-family: var(--font-d);
+      font-size: 1.1rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--amber);
+      font-optical-sizing: auto;
+    }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-b);
+      font-size: .8rem;
+      font-weight: 300;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--cream2);
+      text-decoration: none;
+      transition: color .25s;
+    }
+    .nav-links a:hover { color: var(--cream); }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 7rem 2rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Breathing blob background */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      opacity: .18;
+    }
+    .blob-1 {
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, var(--leaf), transparent 70%);
+      top: 20%; left: -10%;
+      animation: drift 12s ease-in-out infinite;
+    }
+    .blob-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(ellipse, var(--amber), transparent 70%);
+      bottom: 10%; right: -5%;
+      animation: drift 16s ease-in-out infinite reverse;
+    }
+    .blob-3 {
+      width: 350px; height: 350px;
+      background: radial-gradient(ellipse, var(--rust), transparent 70%);
+      top: 60%; left: 40%;
+      animation: drift 10s ease-in-out infinite 3s;
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33%       { transform: translate(30px, -40px) scale(1.05); }
+      66%       { transform: translate(-20px, 20px) scale(.95); }
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-eyebrow {
+      font-family: var(--font-b);
+      font-size: .72rem;
+      font-weight: 300;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--leaf);
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-family: var(--font-d);
+      font-size: clamp(4rem, 10vw, 9rem);
+      font-weight: 300;
+      letter-spacing: -.03em;
+      line-height: .92;
+      margin-bottom: 1rem;
+      font-optical-sizing: auto;
+    }
+
+    h1 .surname {
+      display: block;
+      font-style: italic;
+      font-weight: 600;
+      color: var(--amber);
+    }
+
+    .hero-tagline {
+      font-family: var(--font-b);
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--cream2);
+      margin-top: 2rem;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+      justify-content: center;
+      margin-top: 2.5rem;
+    }
+
+    .pill {
+      font-family: var(--font-b);
+      font-size: .7rem;
+      font-weight: 400;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .4rem 1.1rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--cream2);
+    }
+    .pill.amber { border-color: rgba(212,168,67,.4); color: var(--amber); }
+    .pill.leaf  { border-color: rgba(107,196,109,.4); color: var(--leaf); }
+
+    /* ── Sections ── */
+    section { padding: 7rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-eyebrow {
+      font-family: var(--font-b);
+      font-size: .68rem;
+      font-weight: 400;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--leaf);
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-family: var(--font-d);
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 300;
+      letter-spacing: -.02em;
+      line-height: 1.05;
+      margin-bottom: 3.5rem;
+      font-optical-sizing: auto;
+    }
+
+    h2 em { font-style: italic; color: var(--amber); }
+
+    /* ── Research cards ── */
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .research-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2.8rem;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .3s, background .3s;
+    }
+    .research-card:hover {
+      border-color: rgba(212,168,67,.35);
+      background: rgba(212,168,67,.04);
+    }
+
+    /* organic top accent */
+    .research-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--amber), transparent);
+      opacity: 0;
+      transition: opacity .4s;
+    }
+    .research-card:hover::before { opacity: 1; }
+
+    .card-icon {
+      width: 44px; height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.8rem;
+      transition: border-color .3s;
+    }
+    .research-card:hover .card-icon { border-color: var(--amber); }
+    .card-icon svg { width: 20px; height: 20px; stroke: var(--amber); fill: none; stroke-width: 1.2; }
+
+    .card-tag {
+      font-family: var(--font-b);
+      font-size: .65rem;
+      font-weight: 400;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: .8rem;
+      opacity: .75;
+    }
+
+    .card-title {
+      font-family: var(--font-d);
+      font-size: 1.8rem;
+      font-weight: 400;
+      letter-spacing: -.01em;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      font-optical-sizing: auto;
+    }
+
+    .card-desc {
+      font-size: .9rem;
+      color: var(--cream2);
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .card-tags {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+    }
+
+    .tag {
+      font-family: var(--font-b);
+      font-size: .6rem;
+      font-weight: 300;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .2rem .6rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--cream2);
+    }
+
+    /* ── Gallery ── */
+    #gallery { background: var(--bg2); }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3px;
+    }
+
+    @media (max-width: 900px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 500px) { .gallery-grid { grid-template-columns: 1fr; } }
+
+    .gallery-cell {
+      aspect-ratio: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .6rem;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .3s, background .3s, box-shadow .3s;
+    }
+    .gallery-cell:hover {
+      border-color: rgba(212,168,67,.5);
+      background: rgba(212,168,67,.03);
+      box-shadow: 0 0 30px rgba(212,168,67,.08);
+    }
+
+    .gallery-cell img, .gallery-cell video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-placeholder { display: flex; flex-direction: column; align-items: center; gap: .5rem; }
+    .gallery-cell:has(img) .gallery-placeholder,
+    .gallery-cell:has(video) .gallery-placeholder { display: none; }
+
+    .gallery-ring {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(212,168,67,.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gallery-ring svg { width: 14px; height: 14px; stroke: var(--amber); fill: none; stroke-width: 1.5; }
+
+    .gallery-hint {
+      font-family: var(--font-b);
+      font-size: .58rem;
+      font-weight: 300;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(212,168,67,.45);
+    }
+
+    .gallery-note {
+      margin-top: 1.5rem;
+      font-family: var(--font-b);
+      font-size: .75rem;
+      font-weight: 300;
+      color: var(--cream2);
+      opacity: .6;
+    }
+    .gallery-note code {
+      font-family: inherit;
+      color: var(--amber);
+      opacity: .8;
+    }
+
+    /* ── Music ── */
+    .music-wrapper {
+      position: relative;
+    }
+
+    /* Large decorative text behind card */
+    .music-deco {
+      position: absolute;
+      font-family: var(--font-d);
+      font-size: 18vw;
+      font-weight: 700;
+      font-style: italic;
+      color: rgba(212,168,67,.04);
+      top: 50%;
+      left: -2%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      white-space: nowrap;
+      font-optical-sizing: auto;
+    }
+
+    .music-card {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+      padding: 3rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      text-decoration: none;
+      color: inherit;
+      border-radius: 4px;
+      transition: border-color .3s, background .3s;
+    }
+    .music-card:hover {
+      border-color: rgba(212,168,67,.4);
+      background: rgba(212,168,67,.04);
+    }
+
+    .music-circle {
+      flex-shrink: 0;
+      width: 80px; height: 80px;
+      border: 1px solid rgba(212,168,67,.4);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-d);
+      font-size: 2rem;
+      color: var(--amber);
+      transition: border-color .3s, background .3s;
+    }
+    .music-card:hover .music-circle {
+      border-color: var(--amber);
+      background: rgba(212,168,67,.08);
+    }
+
+    .music-info { flex: 1; }
+
+    .music-label {
+      font-family: var(--font-b);
+      font-size: .65rem;
+      font-weight: 300;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      opacity: .75;
+      margin-bottom: .5rem;
+    }
+
+    .music-title {
+      font-family: var(--font-d);
+      font-size: 2rem;
+      font-weight: 400;
+      letter-spacing: -.01em;
+      line-height: 1.15;
+      margin-bottom: .6rem;
+      font-optical-sizing: auto;
+    }
+
+    .music-desc {
+      font-size: .9rem;
+      color: var(--cream2);
+      font-weight: 300;
+      line-height: 1.65;
+    }
+
+    .music-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      margin-top: 1.2rem;
+      font-family: var(--font-b);
+      font-size: .7rem;
+      font-weight: 400;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.2rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+
+    .footer-name {
+      font-family: var(--font-d);
+      font-size: 1rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--cream2);
+      font-optical-sizing: auto;
+    }
+
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      font-family: var(--font-b);
+      font-size: .72rem;
+      font-weight: 300;
+      color: var(--cream2);
+      text-decoration: none;
+      letter-spacing: .06em;
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--amber); }
+
+    /* ── Animations ── */
+    .fade-up {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity .75s cubic-bezier(.23,1,.32,1), transform .75s cubic-bezier(.23,1,.32,1);
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 700px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .music-card { flex-direction: column; text-align: center; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-name">Matthew Lucia</span>
+    <ul class="nav-links">
+      <li><a href="#research">Research</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#music">Music</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Synthetic Biology · Computation · Making</p>
+      <h1>Matthew<br /><span class="surname">Lucia</span></h1>
+      <p class="hero-tagline">
+        Building minimal living systems — engineering cells, proteins,
+        and instruments from the bottom up.
+      </p>
+      <div class="hero-pills">
+        <span class="pill leaf">Artificial Cells</span>
+        <span class="pill amber">EutM Pore Proteins</span>
+        <span class="pill">Molecular Docking</span>
+        <span class="pill">Cello Building</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <div class="container">
+      <p class="section-eyebrow fade-up">Research</p>
+      <h2 class="fade-up">Life built<br /><em>from scratch</em></h2>
+
+      <div class="research-grid fade-up">
+        <div class="research-card">
+          <div class="card-icon">
+            <!-- Cell icon -->
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 4v2M12 18v2M4 12h2M18 12h2"/></svg>
+          </div>
+          <p class="card-tag">Synthetic Biology</p>
+          <h3 class="card-title">Artificial Cells</h3>
+          <p class="card-desc">
+            Engineering minimal living systems from lipid vesicles and purified
+            molecular machinery. Reconstituting cellular processes — gene expression,
+            metabolism, division — inside synthetic membrane compartments to probe
+            the principles of life.
+          </p>
+          <div class="card-tags">
+            <span class="tag">Lipid vesicles</span>
+            <span class="tag">Gene circuits</span>
+            <span class="tag">TXTL</span>
+            <span class="tag">Bottom-up assembly</span>
+          </div>
+        </div>
+
+        <div class="research-card">
+          <div class="card-icon">
+            <!-- Hexagon/pore icon -->
+            <svg viewBox="0 0 24 24"><polygon points="12,2 20,7 20,17 12,22 4,17 4,7"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <p class="card-tag">Protein Engineering</p>
+          <h3 class="card-title">EutM Synthetic Pores</h3>
+          <p class="card-desc">
+            Harnessing the bacterial microcompartment shell protein EutM to engineer
+            selective nanopores. Combining computational docking and molecular dynamics
+            to design assemblies with defined pore geometries for membrane transport.
+          </p>
+          <div class="card-tags">
+            <span class="tag">EutM</span>
+            <span class="tag">Pore engineering</span>
+            <span class="tag">Mol. docking</span>
+            <span class="tag">MD simulation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="container">
+      <p class="section-eyebrow fade-up">Microscopy Gallery</p>
+      <h2 class="fade-up">Images from the<br /><em>cellular world</em></h2>
+
+      <div class="gallery-grid fade-up">
+        <div class="gallery-cell">
+          <div class="gallery-placeholder">
+            <div class="gallery-ring"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div>
+            <span class="gallery-hint">Image / Video</span>
+          </div>
+        </div>
+        <div class="gallery-cell">
+          <div class="gallery-placeholder">
+            <div class="gallery-ring"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div>
+            <span class="gallery-hint">Image / Video</span>
+          </div>
+        </div>
+        <div class="gallery-cell">
+          <div class="gallery-placeholder">
+            <div class="gallery-ring"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div>
+            <span class="gallery-hint">Image / Video</span>
+          </div>
+        </div>
+        <div class="gallery-cell">
+          <div class="gallery-placeholder">
+            <div class="gallery-ring"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div>
+            <span class="gallery-hint">Image / Video</span>
+          </div>
+        </div>
+        <div class="gallery-cell">
+          <div class="gallery-placeholder">
+            <div class="gallery-ring"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div>
+            <span class="gallery-hint">Image / Video</span>
+          </div>
+        </div>
+        <div class="gallery-cell">
+          <div class="gallery-placeholder">
+            <div class="gallery-ring"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div>
+            <span class="gallery-hint">Image / Video</span>
+          </div>
+        </div>
+        <div class="gallery-cell">
+          <div class="gallery-placeholder">
+            <div class="gallery-ring"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div>
+            <span class="gallery-hint">Image / Video</span>
+          </div>
+        </div>
+        <div class="gallery-cell">
+          <div class="gallery-placeholder">
+            <div class="gallery-ring"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div>
+            <span class="gallery-hint">Image / Video</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="gallery-note">
+        Place images or videos in <code>assets/gallery/</code> — .tif, .jpg, .mp4, .mov
+      </p>
+    </div>
+  </section>
+
+  <!-- MUSIC -->
+  <section id="music">
+    <div class="container">
+      <p class="section-eyebrow fade-up">Music</p>
+      <h2 class="fade-up">Crafting<br /><em>instruments</em></h2>
+
+      <div class="music-wrapper fade-up">
+        <div class="music-deco">♩</div>
+        <a
+          href="https://www.youtube.com/@cellobuilder"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="music-card"
+        >
+          <div class="music-circle">𝄞</div>
+          <div class="music-info">
+            <p class="music-label">YouTube · @cellobuilder</p>
+            <p class="music-title">Cello Building & Performance</p>
+            <p class="music-desc">
+              Crafting cellos from raw tonewoods — documenting the instrument-making
+              process from plate graduation to varnishing, alongside original performances.
+            </p>
+            <span class="music-link">Watch on YouTube →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Matthew Lucia — 2025</span>
+    <div class="footer-links">
+      <a href="mailto:mjlucia17@gmail.com">Email</a>
+      <a href="https://github.com/mjl1117" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.youtube.com/@cellobuilder" target="_blank" rel="noopener">YouTube</a>
+    </div>
+  </footer>
+
+  <script>
+    const els = document.querySelectorAll('.fade-up');
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }),
+      { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
+    );
+    els.forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>

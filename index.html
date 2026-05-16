@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matthew Lucia — Choose a Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: #111;
+      color: #eee;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+    }
+
+    h1 {
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: .5rem;
+    }
+
+    p.sub {
+      font-size: .8rem;
+      color: #555;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5px;
+      background: #2a2a2a;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    a.card {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      padding: 2.2rem;
+      background: #111;
+      text-decoration: none;
+      color: inherit;
+      transition: background .2s;
+    }
+    a.card:hover { background: #181818; }
+
+    .card-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      margin-bottom: .6rem;
+    }
+
+    .card-name {
+      font-size: .95rem;
+      font-weight: 500;
+      color: #ddd;
+    }
+
+    .card-desc {
+      font-size: .78rem;
+      font-weight: 300;
+      color: #666;
+      line-height: 1.55;
+    }
+
+    .card-palette {
+      display: flex;
+      gap: 4px;
+      margin-top: .8rem;
+    }
+
+    .swatch {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+    }
+
+    .card-arrow {
+      margin-top: auto;
+      padding-top: 1.5rem;
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #444;
+    }
+    a.card:hover .card-arrow { color: #999; }
+  </style>
+</head>
+<body>
+  <h1>Matthew Lucia — Design Prototypes</h1>
+  <p class="sub">Choose a direction to preview, then iterate with /impeccable</p>
+
+  <div class="grid">
+    <a class="card" href="prototype-dark.html">
+      <div class="card-dot" style="background:#00f5c8"></div>
+      <span class="card-name">Luminescent Dark</span>
+      <span class="card-desc">Near-black with fluorescence-inspired cyan, magenta & green — evokes confocal microscopy. Cormorant Garamond + Space Mono.</span>
+      <div class="card-palette">
+        <div class="swatch" style="background:#060d14;border:1px solid #333"></div>
+        <div class="swatch" style="background:#00f5c8"></div>
+        <div class="swatch" style="background:#ff2d78"></div>
+        <div class="swatch" style="background:#a8ff3e"></div>
+      </div>
+      <span class="card-arrow">Open →</span>
+    </a>
+
+    <a class="card" href="prototype-editorial.html">
+      <div class="card-dot" style="background:#c9f000"></div>
+      <span class="card-name">Editorial Scientific</span>
+      <span class="card-desc">Parchment off-white, deep navy ink, acid-yellow accent. Ruled-paper grid, numbered sections. Playfair Display + Crimson Text.</span>
+      <div class="card-palette">
+        <div class="swatch" style="background:#faf8f4;border:1px solid #333"></div>
+        <div class="swatch" style="background:#1a1a2e"></div>
+        <div class="swatch" style="background:#c9f000"></div>
+      </div>
+      <span class="card-arrow">Open →</span>
+    </a>
+
+    <a class="card" href="prototype-organic.html">
+      <div class="card-dot" style="background:#d4a843"></div>
+      <span class="card-name">Organic Warm</span>
+      <span class="card-desc">Deep forest green, warm cream, amber & leaf accents. Animated breathing blobs. Fraunces + DM Sans.</span>
+      <div class="card-palette">
+        <div class="swatch" style="background:#0e1f0d;border:1px solid #333"></div>
+        <div class="swatch" style="background:#f2ead6"></div>
+        <div class="swatch" style="background:#d4a843"></div>
+        <div class="swatch" style="background:#6bc46d"></div>
+      </div>
+      <span class="card-arrow">Open →</span>
+    </a>
+  </div>
+</body>
+</html>
