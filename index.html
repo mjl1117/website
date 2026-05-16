@@ -1,147 +1,987 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Matthew Lucia — Choose a Design</title>
+  <title>Matthew Lucia</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
   <style>
+    /* =========================================================
+       RESET & BASE
+    ========================================================= */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
+    /* =========================================================
+       THEME VARIABLES
+    ========================================================= */
+    [data-theme="dark"] {
+      --bg:         #060d14;
+      --bg2:        #0b1520;
+      --surface:    rgba(255,255,255,.04);
+      --border:     rgba(0,245,200,.14);
+      --border-sub: rgba(0,245,200,.06);
+      --accent1:    #00f5c8;
+      --accent2:    #ff2d78;
+      --accent3:    #a8ff3e;
+      --text:       #e8f4f8;
+      --muted:      rgba(232,244,248,.45);
+      --heading:    'Cormorant Garamond', Georgia, serif;
+      --body:       'Cormorant Garamond', Georgia, serif;
+      --mono:       'Space Mono', 'Courier New', monospace;
+      --nav-bg:     rgba(6,13,20,.75);
+      --nav-border: rgba(0,245,200,.12);
+      --card-hover: rgba(0,245,200,.04);
+      --card-accent-color: var(--accent1);
+      --switcher-bg: rgba(0,245,200,.08);
+      --switcher-border: rgba(0,245,200,.2);
+    }
+
+    [data-theme="editorial"] {
+      --bg:         #faf8f4;
+      --bg2:        #f2ede4;
+      --surface:    rgba(26,26,46,.03);
+      --border:     #1a1a2e;
+      --border-sub: rgba(26,26,46,.15);
+      --accent1:    #1a1a2e;
+      --accent2:    #c9f000;
+      --accent3:    #9aba00;
+      --text:       #1a1a2e;
+      --muted:      #8a8a9e;
+      --heading:    'Playfair Display', Georgia, serif;
+      --body:       'Crimson Text', Georgia, serif;
+      --mono:       'Playfair Display', Georgia, serif;
+      --nav-bg:     rgba(250,248,244,.94);
+      --nav-border: #1a1a2e;
+      --card-hover: rgba(201,240,0,.06);
+      --card-accent-color: var(--accent2);
+      --switcher-bg: rgba(201,240,0,.15);
+      --switcher-border: rgba(26,26,46,.3);
+    }
+
+    [data-theme="organic"] {
+      --bg:         #0e1f0d;
+      --bg2:        #0a1809;
+      --surface:    rgba(242,234,214,.04);
+      --border:     rgba(212,168,67,.2);
+      --border-sub: rgba(212,168,67,.08);
+      --accent1:    #d4a843;
+      --accent2:    #6bc46d;
+      --accent3:    #f2ead6;
+      --text:       #f2ead6;
+      --muted:      rgba(242,234,214,.5);
+      --heading:    'Fraunces', Georgia, serif;
+      --body:       'DM Sans', system-ui, sans-serif;
+      --mono:       'DM Sans', system-ui, sans-serif;
+      --nav-bg:     rgba(14,31,13,.82);
+      --nav-border: rgba(212,168,67,.18);
+      --card-hover: rgba(212,168,67,.04);
+      --card-accent-color: var(--accent1);
+      --switcher-bg: rgba(212,168,67,.1);
+      --switcher-border: rgba(212,168,67,.3);
+    }
+
+    /* =========================================================
+       GLOBAL STYLES (use theme vars)
+    ========================================================= */
     body {
-      font-family: 'DM Sans', system-ui, sans-serif;
-      background: #111;
-      color: #eee;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      font-size: 18px;
+      line-height: 1.65;
+      overflow-x: hidden;
+      transition: background .4s ease, color .4s ease;
+    }
+
+    /* noise overlay (dark / organic only) */
+    [data-theme="dark"] body::before,
+    [data-theme="organic"] body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: .025;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ruled paper lines (editorial only) */
+    [data-theme="editorial"] body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: repeating-linear-gradient(
+        transparent, transparent 27px,
+        rgba(26,26,46,.07) 27px, rgba(26,26,46,.07) 28px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Theme Switcher Bar ── */
+    .switcher-bar {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0;
+      background: var(--nav-bg);
+      border: 1px solid var(--switcher-border);
+      backdrop-filter: blur(20px);
+      z-index: 200;
+      overflow: hidden;
+    }
+
+    .sw-btn {
+      font-family: var(--mono);
+      font-size: .62rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: .65rem 1.4rem;
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--switcher-border);
+      color: var(--muted);
+      cursor: pointer;
+      transition: background .2s, color .2s;
+      white-space: nowrap;
+    }
+    .sw-btn:last-child { border-right: none; }
+    .sw-btn:hover { background: var(--switcher-bg); color: var(--text); }
+    .sw-btn.active { background: var(--switcher-bg); color: var(--accent1); }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: var(--nav-bg);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--nav-border);
+      z-index: 100;
+      transition: background .4s, border-color .4s;
+    }
+
+    [data-theme="editorial"] nav {
+      border-bottom-width: 2px;
+    }
+
+    .nav-name {
+      font-family: var(--heading);
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--accent1);
+      text-decoration: none;
+      letter-spacing: -.01em;
+    }
+    [data-theme="dark"] .nav-name {
+      font-family: var(--mono);
+      font-size: .78rem;
+      letter-spacing: .18em;
+      font-weight: 400;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    [data-theme="editorial"] .nav-links a {
+      font-family: var(--body);
+      font-style: italic;
+      text-transform: none;
+      font-size: .92rem;
+      letter-spacing: 0;
+    }
+    .nav-links a:hover { color: var(--accent1); }
+
+    /* ── Hero ── */
+    .hero {
       min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Dark: radial glows */
+    [data-theme="dark"] .hero::before {
+      content: '';
+      position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(ellipse, rgba(0,245,200,.07) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -55%);
+      animation: pulse-glow 7s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    /* Editorial: horizontal rule across center */
+    [data-theme="editorial"] .hero::before {
+      content: '';
+      position: absolute;
+      height: 2px; left: 0; right: 0;
+      top: 50%;
+      background: var(--border);
+      pointer-events: none;
+    }
+
+    /* Organic: breathing blobs */
+    .blob { display: none; }
+    [data-theme="organic"] .blob {
+      display: block;
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      opacity: .15;
+    }
+    .blob-1 { width:600px;height:400px; background:radial-gradient(ellipse,#6bc46d,transparent 70%); top:20%;left:-10%; animation:drift 12s ease-in-out infinite; }
+    .blob-2 { width:500px;height:500px; background:radial-gradient(ellipse,#d4a843,transparent 70%); bottom:10%;right:-5%; animation:drift 16s ease-in-out infinite reverse; }
+    .blob-3 { width:350px;height:350px; background:radial-gradient(ellipse,#c4613a,transparent 70%); top:60%;left:40%; animation:drift 10s ease-in-out infinite 3s; }
+
+    @keyframes pulse-glow { 0%,100%{opacity:.9;transform:translate(-50%,-55%) scale(1)} 50%{opacity:.55;transform:translate(-50%,-55%) scale(1.1)} }
+    @keyframes drift { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(30px,-40px) scale(1.05)} 66%{transform:translate(-20px,20px) scale(.95)} }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--accent1);
+      margin-bottom: 2rem;
+      opacity: .85;
+    }
+    [data-theme="editorial"] .hero-eyebrow { color: var(--muted); }
+
+    h1 {
+      font-family: var(--heading);
+      font-size: clamp(4rem, 10vw, 9rem);
+      font-weight: 300;
+      letter-spacing: -.03em;
+      line-height: .92;
+      margin-bottom: 1rem;
+    }
+    [data-theme="editorial"] h1 { font-weight: 900; }
+
+    h1 .given { display: block; }
+    h1 .surname {
+      display: block;
+      font-style: italic;
+      color: var(--accent1);
+    }
+    [data-theme="editorial"] h1 .surname {
+      color: var(--text);
+      font-weight: 400;
+    }
+    [data-theme="organic"] h1 .surname { font-weight: 600; }
+
+    .hero-tagline {
+      font-family: var(--body);
+      font-size: 1rem;
+      color: var(--muted);
+      margin-top: 1.8rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+    [data-theme="dark"] .hero-tagline {
+      font-size: .82rem;
+      letter-spacing: .08em;
+      font-family: var(--mono);
+    }
+
+    .hero-pills {
+      display: flex; flex-wrap: wrap; gap: .6rem;
+      justify-content: center; margin-top: 2.5rem;
+    }
+    .pill {
+      font-family: var(--mono);
+      font-size: .65rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .4rem 1.1rem;
+      border: 1px solid var(--border-sub);
+      color: var(--muted);
+    }
+    [data-theme="dark"] .pill { border-radius: 0; }
+    [data-theme="organic"] .pill { border-radius: 100px; }
+    .pill.p1 { border-color: color-mix(in srgb, var(--accent1) 40%, transparent); color: var(--accent1); }
+    .pill.p2 { border-color: color-mix(in srgb, var(--accent2) 40%, transparent); color: var(--accent2); }
+
+    /* ── Section shell ── */
+    section { padding: 7rem 2rem; position: relative; z-index: 1; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: .68rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--accent1);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    [data-theme="editorial"] .section-label {
+      color: var(--muted);
+      border-bottom: 2px solid var(--border);
+      padding-bottom: .8rem;
+      margin-bottom: 2.5rem;
+      font-family: var(--heading);
+      font-size: .7rem;
+    }
+
+    h2 {
+      font-family: var(--heading);
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      font-weight: 300;
+      letter-spacing: -.02em;
+      line-height: 1.05;
+      margin-bottom: 3rem;
+    }
+    [data-theme="editorial"] h2 { font-weight: 900; }
+    h2 em { font-style: italic; color: var(--accent1); }
+    [data-theme="editorial"] h2 em { color: var(--text); font-weight: 400; }
+
+    /* alternate section bg */
+    section.alt { background: var(--bg2); }
+
+    /* ── Research / Cards Grid ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5px;
+      background: var(--border-sub);
+    }
+    [data-theme="organic"] .cards-grid {
+      gap: 1.5rem;
+      background: transparent;
+    }
+
+    .card {
+      background: var(--bg);
+      padding: 2.8rem;
+      position: relative;
+      overflow: hidden;
+      transition: background .3s;
+    }
+    [data-theme="organic"] .card {
+      background: var(--surface);
+      border: 1px solid var(--border-sub);
+    }
+    .card:hover { background: var(--card-hover); }
+
+    /* left accent bar (dark & editorial) */
+    [data-theme="dark"] .card::before,
+    [data-theme="editorial"] .card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--accent1);
+      transition: height .45s cubic-bezier(.23,1,.32,1);
+    }
+    [data-theme="dark"] .card:hover::before,
+    [data-theme="editorial"] .card:hover::before { height: 100%; }
+
+    /* top accent bar (organic) */
+    [data-theme="organic"] .card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg,transparent,var(--accent1),transparent);
+      opacity: 0;
+      transition: opacity .4s;
+    }
+    [data-theme="organic"] .card:hover::before { opacity: 1; }
+
+    .card-tag {
+      font-family: var(--mono);
+      font-size: .62rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 1rem;
+      opacity: .9;
+    }
+    [data-theme="editorial"] .card-tag { color: var(--muted); }
+
+    .card-num {
+      display: none;
+      font-family: var(--heading);
+      font-size: 4rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: .8rem;
+      color: var(--accent2);
+      -webkit-text-stroke: 1.5px var(--text);
+    }
+    [data-theme="editorial"] .card-num { display: block; }
+
+    h3.card-title {
+      font-family: var(--heading);
+      font-size: 1.9rem;
+      font-weight: 400;
+      letter-spacing: -.01em;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    [data-theme="editorial"] h3.card-title { font-weight: 700; }
+
+    .card-desc {
+      font-size: .95rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    [data-theme="editorial"] .card-desc { font-style: italic; }
+
+    .card-keywords {
+      margin-top: 1.8rem;
+      display: flex; flex-wrap: wrap; gap: .4rem;
+    }
+    .kw {
+      font-family: var(--mono);
+      font-size: .6rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .2rem .6rem;
+      border: 1px solid var(--border-sub);
+      color: var(--muted);
+    }
+
+    /* ── Projects & Resources cards ── */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      display: block;
+      padding: 2.2rem;
+      border: 1px solid var(--border-sub);
+      background: var(--surface);
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .3s, background .3s;
+    }
+    .project-card:hover {
+      border-color: var(--accent1);
+      background: var(--card-hover);
+    }
+
+    .project-status {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: .58rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: .18rem .55rem;
+      border: 1px solid var(--border-sub);
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .project-status.live {
+      border-color: color-mix(in srgb, var(--accent2) 40%, transparent);
+      color: var(--accent2);
+    }
+    .project-status.wip {
+      border-color: color-mix(in srgb, var(--accent1) 35%, transparent);
+      color: var(--accent1);
+    }
+
+    .project-title {
+      font-family: var(--heading);
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: -.01em;
+      margin-bottom: .6rem;
+    }
+    [data-theme="editorial"] .project-title { font-weight: 700; font-size: 1.4rem; }
+
+    .project-desc {
+      font-size: .88rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    [data-theme="editorial"] .project-desc { font-style: italic; }
+
+    .project-arrow {
+      margin-top: 1.4rem;
+      font-family: var(--mono);
+      font-size: .65rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent1);
+    }
+
+    /* placeholder card style */
+    .card-placeholder {
+      border-style: dashed;
+      opacity: .45;
+      cursor: default;
+    }
+    .card-placeholder:hover { border-color: var(--border-sub); background: transparent; }
+
+    /* ── Gallery ── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+    [data-theme="organic"] .gallery-grid { gap: 3px; }
+    [data-theme="editorial"] .gallery-grid { gap: 1px; background: var(--border); border: 1px solid var(--border); }
+
+    @media (max-width: 900px) { .gallery-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 500px) { .gallery-grid { grid-template-columns: 1fr; } }
+
+    .gallery-cell {
+      aspect-ratio: 1;
+      background: var(--surface);
+      border: 1px dashed var(--border-sub);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 3rem 1.5rem;
-    }
-
-    h1 {
-      font-size: 1rem;
-      font-weight: 300;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: #666;
-      margin-bottom: .5rem;
-    }
-
-    p.sub {
-      font-size: .8rem;
-      color: #555;
-      margin-bottom: 3rem;
-      text-align: center;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5px;
-      background: #2a2a2a;
-      width: 100%;
-      max-width: 900px;
-    }
-
-    a.card {
-      display: flex;
-      flex-direction: column;
       gap: .5rem;
-      padding: 2.2rem;
-      background: #111;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .3s, background .3s;
+    }
+    [data-theme="editorial"] .gallery-cell { border-style: solid; border-color: transparent; }
+
+    .gallery-cell:hover {
+      border-color: var(--accent1);
+      background: var(--card-hover);
+    }
+
+    .gallery-cell img, .gallery-cell video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover;
+    }
+
+    .gallery-placeholder { display: flex; flex-direction: column; align-items: center; gap: .5rem; }
+    .gallery-cell:has(img) .gallery-placeholder,
+    .gallery-cell:has(video) .gallery-placeholder { display: none; }
+
+    .gallery-icon {
+      width: 30px; height: 30px;
+      border: 1px solid var(--border-sub);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gallery-icon svg { width: 12px; height: 12px; stroke: var(--accent1); fill: none; stroke-width: 1.5; }
+
+    .fig-label {
+      font-family: var(--mono);
+      font-size: .56rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    [data-theme="editorial"] .fig-label { font-family: var(--heading); font-style: italic; font-size: .75rem; letter-spacing: 0; }
+
+    .gallery-note {
+      margin-top: 1.2rem;
+      font-family: var(--mono);
+      font-size: .65rem;
+      letter-spacing: .1em;
+      color: var(--muted);
+      opacity: .65;
+    }
+    .gallery-note code { color: var(--accent1); font-family: inherit; }
+
+    /* ── Music ── */
+    .music-card {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      padding: 3rem;
+      border: 1px solid var(--border-sub);
+      background: var(--surface);
       text-decoration: none;
       color: inherit;
-      transition: background .2s;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .3s, background .3s;
     }
-    a.card:hover { background: #181818; }
+    [data-theme="editorial"] .music-card {
+      border: 2px solid var(--border);
+      overflow: hidden;
+    }
+    [data-theme="editorial"] .music-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--accent2);
+      transform: translateY(101%);
+      transition: transform .45s cubic-bezier(.23,1,.32,1);
+      z-index: 0;
+    }
+    [data-theme="editorial"] .music-card:hover::before { transform: translateY(0); }
+    [data-theme="editorial"] .music-card > * { position: relative; z-index: 1; }
 
-    .card-dot {
-      width: 10px; height: 10px;
+    .music-card:hover {
+      border-color: var(--accent2);
+      background: color-mix(in srgb, var(--accent2) 5%, transparent);
+    }
+    [data-theme="editorial"] .music-card:hover { background: transparent; }
+
+    .music-icon {
+      flex-shrink: 0;
+      width: 72px; height: 72px;
+      border: 1px solid color-mix(in srgb, var(--accent2) 50%, transparent);
       border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--heading);
+      font-size: 1.8rem;
+      color: var(--accent2);
+      transition: background .3s;
+    }
+    .music-card:hover .music-icon { background: color-mix(in srgb, var(--accent2) 10%, transparent); }
+
+    .music-info { flex: 1; }
+
+    .music-tag {
+      font-family: var(--mono);
+      font-size: .62rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent2);
       margin-bottom: .6rem;
     }
 
-    .card-name {
-      font-size: .95rem;
-      font-weight: 500;
-      color: #ddd;
+    .music-title {
+      font-family: var(--heading);
+      font-size: 2rem;
+      font-weight: 400;
+      letter-spacing: -.01em;
+      margin-bottom: .6rem;
     }
+    [data-theme="editorial"] .music-title { font-weight: 700; font-size: 1.8rem; }
 
-    .card-desc {
-      font-size: .78rem;
-      font-weight: 300;
-      color: #666;
-      line-height: 1.55;
+    .music-desc {
+      font-size: .92rem;
+      color: var(--muted);
+      line-height: 1.7;
     }
+    [data-theme="editorial"] .music-desc { font-style: italic; }
 
-    .card-palette {
-      display: flex;
-      gap: 4px;
-      margin-top: .8rem;
-    }
-
-    .swatch {
-      width: 16px; height: 16px;
-      border-radius: 50%;
-    }
-
-    .card-arrow {
-      margin-top: auto;
-      padding-top: 1.5rem;
+    .music-arrow {
+      flex-shrink: 0;
+      font-family: var(--mono);
       font-size: .72rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: #444;
+      letter-spacing: .08em;
+      color: var(--accent2);
     }
-    a.card:hover .card-arrow { color: #999; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border-sub);
+      padding: 2.2rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+      position: relative; z-index: 1;
+    }
+    [data-theme="editorial"] footer { border-top-width: 2px; border-top-color: var(--border); }
+
+    .footer-name {
+      font-family: var(--heading);
+      font-size: 1rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--muted);
+    }
+    [data-theme="dark"] .footer-name { font-family: var(--mono); font-size: .7rem; letter-spacing: .15em; font-style: normal; text-transform: uppercase; }
+
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    [data-theme="editorial"] .footer-links a { text-transform: none; font-family: var(--body); font-style: italic; font-size: .82rem; letter-spacing: 0; }
+    .footer-links a:hover { color: var(--accent1); }
+
+    /* ── Scroll animations ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .7s cubic-bezier(.23,1,.32,1), transform .7s cubic-bezier(.23,1,.32,1);
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 760px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      .nav-links a { font-size: .62rem; }
+      .music-card { flex-direction: column; text-align: center; }
+      footer { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 520px) {
+      .nav-links li:nth-child(n+4) { display: none; }
+    }
   </style>
 </head>
 <body>
-  <h1>Matthew Lucia — Design Prototypes</h1>
-  <p class="sub">Choose a direction to preview, then iterate with /impeccable</p>
 
-  <div class="grid">
-    <a class="card" href="prototype-dark.html">
-      <div class="card-dot" style="background:#00f5c8"></div>
-      <span class="card-name">Luminescent Dark</span>
-      <span class="card-desc">Near-black with fluorescence-inspired cyan, magenta & green — evokes confocal microscopy. Cormorant Garamond + Space Mono.</span>
-      <div class="card-palette">
-        <div class="swatch" style="background:#060d14;border:1px solid #333"></div>
-        <div class="swatch" style="background:#00f5c8"></div>
-        <div class="swatch" style="background:#ff2d78"></div>
-        <div class="swatch" style="background:#a8ff3e"></div>
-      </div>
-      <span class="card-arrow">Open →</span>
-    </a>
-
-    <a class="card" href="prototype-editorial.html">
-      <div class="card-dot" style="background:#c9f000"></div>
-      <span class="card-name">Editorial Scientific</span>
-      <span class="card-desc">Parchment off-white, deep navy ink, acid-yellow accent. Ruled-paper grid, numbered sections. Playfair Display + Crimson Text.</span>
-      <div class="card-palette">
-        <div class="swatch" style="background:#faf8f4;border:1px solid #333"></div>
-        <div class="swatch" style="background:#1a1a2e"></div>
-        <div class="swatch" style="background:#c9f000"></div>
-      </div>
-      <span class="card-arrow">Open →</span>
-    </a>
-
-    <a class="card" href="prototype-organic.html">
-      <div class="card-dot" style="background:#d4a843"></div>
-      <span class="card-name">Organic Warm</span>
-      <span class="card-desc">Deep forest green, warm cream, amber & leaf accents. Animated breathing blobs. Fraunces + DM Sans.</span>
-      <div class="card-palette">
-        <div class="swatch" style="background:#0e1f0d;border:1px solid #333"></div>
-        <div class="swatch" style="background:#f2ead6"></div>
-        <div class="swatch" style="background:#d4a843"></div>
-        <div class="swatch" style="background:#6bc46d"></div>
-      </div>
-      <span class="card-arrow">Open →</span>
-    </a>
+  <!-- THEME SWITCHER -->
+  <div class="switcher-bar" role="toolbar" aria-label="Design theme switcher">
+    <button class="sw-btn active" data-t="dark">Luminescent Dark</button>
+    <button class="sw-btn" data-t="editorial">Editorial</button>
+    <button class="sw-btn" data-t="organic">Organic Warm</button>
   </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-name">M. Lucia</a>
+    <ul class="nav-links">
+      <li><a href="#research">Research</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#resources">Resources</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#music">Music</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <!-- organic blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Synthetic Biology · Computation · Engineering</p>
+      <h1>
+        <span class="given">Matthew</span>
+        <span class="surname">Lucia</span>
+      </h1>
+      <p class="hero-tagline">
+        Building life from the bottom up — engineering artificial cells,
+        microcompartment proteins, and computational tools for synthetic biology.
+      </p>
+      <div class="hero-pills">
+        <span class="pill p1">Artificial Cells</span>
+        <span class="pill p2">Pdu Microcompartments</span>
+        <span class="pill">Molecular Docking</span>
+        <span class="pill">Computational Biology</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <div class="container">
+      <p class="section-label fade-up">Research</p>
+      <h2 class="fade-up">Life built<br /><em>from scratch</em></h2>
+
+      <div class="cards-grid fade-up">
+        <div class="card">
+          <div class="card-num">01</div>
+          <p class="card-tag">Synthetic Biology</p>
+          <h3 class="card-title">Artificial Cells</h3>
+          <p class="card-desc">
+            Engineering minimal living systems from lipid vesicles and purified
+            molecular machinery. Reconstituting gene expression, metabolism, and
+            division inside synthetic membrane compartments to understand the
+            fundamental principles of life.
+          </p>
+          <div class="card-keywords">
+            <span class="kw">Lipid vesicles</span>
+            <span class="kw">Cell-free TXTL</span>
+            <span class="kw">Bottom-up assembly</span>
+            <span class="kw">Minimal cells</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-num">02</div>
+          <p class="card-tag">Protein Engineering</p>
+          <h3 class="card-title">Pdu Microcompartment Proteins</h3>
+          <p class="card-desc">
+            Engineering bacterial microcompartment (BMC) shell proteins from the
+            Pdu system to create synthetic nanopores and protein assemblies.
+            Combining computational docking and molecular dynamics to design
+            protein–membrane interfaces for controlled transport.
+          </p>
+          <div class="card-keywords">
+            <span class="kw">PduA / PduB</span>
+            <span class="kw">BMC shells</span>
+            <span class="kw">Nanopore design</span>
+            <span class="kw">Molecular docking</span>
+            <span class="kw">MD simulation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="alt">
+    <div class="container">
+      <p class="section-label fade-up">Projects</p>
+      <h2 class="fade-up">What I've<br /><em>been building</em></h2>
+
+      <div class="project-grid fade-up">
+        <a href="neuroaesthetic_music/" class="project-card">
+          <span class="project-status live">Live</span>
+          <p class="project-title">Neuroaesthetic Music</p>
+          <p class="project-desc">
+            An interactive research writeup exploring how spectral timbre —
+            not harmony — predicts emotional responses to contemporary music.
+            Combines ML, biosignals (EDA, PPG, ECG), and Grisey's spectralism.
+          </p>
+          <p class="project-arrow">Explore →</p>
+        </a>
+
+        <div class="project-card card-placeholder">
+          <span class="project-status wip">Coming soon</span>
+          <p class="project-title">Project Two</p>
+          <p class="project-desc">Add your next project here — research writeups, data analyses, design work, or anything worth sharing.</p>
+        </div>
+
+        <div class="project-card card-placeholder">
+          <span class="project-status wip">Coming soon</span>
+          <p class="project-title">Project Three</p>
+          <p class="project-desc">Another project slot. Edit <code style="font-size:.8em;color:var(--accent1)">index.html</code> to fill it in.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section id="resources">
+    <div class="container">
+      <p class="section-label fade-up">Resources</p>
+      <h2 class="fade-up">Lab tools &amp;<br /><em>webapps</em></h2>
+
+      <div class="project-grid fade-up">
+        <div class="project-card card-placeholder">
+          <span class="project-status wip">In progress</span>
+          <p class="project-title">Lab Helper App</p>
+          <p class="project-desc">
+            A placeholder for your first lab webapp — concentration calculators,
+            buffer makers, protocol tools, or any browser-based utility for the bench.
+          </p>
+        </div>
+
+        <div class="project-card card-placeholder">
+          <span class="project-status wip">Coming soon</span>
+          <p class="project-title">Resource Two</p>
+          <p class="project-desc">A second lab tool slot. Add any useful webapp or reference tool here.</p>
+        </div>
+
+        <div class="project-card card-placeholder">
+          <span class="project-status wip">Coming soon</span>
+          <p class="project-title">Resource Three</p>
+          <p class="project-desc">A third resource slot for tools, calculators, or references.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="alt">
+    <div class="container">
+      <p class="section-label fade-up">Microscopy Gallery</p>
+      <h2 class="fade-up">Images from the<br /><em>cellular world</em></h2>
+
+      <div class="gallery-grid fade-up">
+        <div class="gallery-cell"><div class="gallery-placeholder"><div class="gallery-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div><span class="fig-label">Fig. 1</span></div></div>
+        <div class="gallery-cell"><div class="gallery-placeholder"><div class="gallery-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div><span class="fig-label">Fig. 2</span></div></div>
+        <div class="gallery-cell"><div class="gallery-placeholder"><div class="gallery-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div><span class="fig-label">Fig. 3</span></div></div>
+        <div class="gallery-cell"><div class="gallery-placeholder"><div class="gallery-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div><span class="fig-label">Fig. 4</span></div></div>
+        <div class="gallery-cell"><div class="gallery-placeholder"><div class="gallery-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div><span class="fig-label">Fig. 5</span></div></div>
+        <div class="gallery-cell"><div class="gallery-placeholder"><div class="gallery-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div><span class="fig-label">Fig. 6</span></div></div>
+        <div class="gallery-cell"><div class="gallery-placeholder"><div class="gallery-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div><span class="fig-label">Fig. 7</span></div></div>
+        <div class="gallery-cell"><div class="gallery-placeholder"><div class="gallery-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div><span class="fig-label">Fig. 8</span></div></div>
+      </div>
+
+      <p class="gallery-note fade-up">
+        Drop images or videos into <code>assets/gallery/</code> &mdash; .tif, .jpg, .mp4, .mov
+      </p>
+    </div>
+  </section>
+
+  <!-- MUSIC -->
+  <section id="music">
+    <div class="container">
+      <p class="section-label fade-up">Music</p>
+      <h2 class="fade-up">Compositions<br />&amp; <em>performance</em></h2>
+
+      <a
+        href="https://www.youtube.com/@cellobuilder"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="music-card fade-up"
+      >
+        <div class="music-icon">𝄞</div>
+        <div class="music-info">
+          <p class="music-tag">YouTube · @cellobuilder</p>
+          <p class="music-title">Original Compositions & Cello</p>
+          <p class="music-desc">
+            A channel for music — original compositions alongside cello performance.
+            The name is a metaphor: building music the way an engineer builds systems,
+            from first principles.
+          </p>
+        </div>
+        <span class="music-arrow">Watch →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Matthew Lucia — 2025</span>
+    <div class="footer-links">
+      <a href="mailto:mjlucia17@gmail.com">Email</a>
+      <a href="https://github.com/mjl1117" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.youtube.com/@cellobuilder" target="_blank" rel="noopener">YouTube</a>
+    </div>
+  </footer>
+
+  <script>
+    // Theme switcher
+    const html  = document.documentElement;
+    const btns  = document.querySelectorAll('.sw-btn');
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        html.setAttribute('data-theme', btn.dataset.t);
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    // Scroll fade-in
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      }),
+      { threshold: 0.08, rootMargin: '0px 0px -50px 0px' }
+    );
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
