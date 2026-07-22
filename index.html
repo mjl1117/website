@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-motion="kinetic" data-rhythm="banded">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -669,15 +669,7 @@
       .nav-links li:nth-child(n+4) { display: none; }
     }
 
-    /* ── TWEAKS: expressive controls ── */
-    /* Accent mood — swaps the rust family for a cool slate accent */
-    html[data-mood="slate"] {
-      --rust:      oklch(58% 0.09 250);
-      --rust-dark: oklch(48% 0.09 250);
-      --rust-pale: oklch(94% 0.02 250);
-    }
-
-    /* Motif presence — how much the liposome mark texture the page */
+    /* Motif presence — how much the liposome mark textures the page */
     .sec-motif {
       position: absolute;
       width: 24rem;
@@ -686,15 +678,12 @@
       pointer-events: none;
       transition: opacity .6s ease;
     }
-    html[data-motif="bold"] .sec-motif { opacity: .06; }
-    html[data-motif="bold"] .hero-motif { opacity: .2; width: 74rem; }
-    html[data-motif="bold"] .sec-kicker-row img { width: 20px; height: 20px; }
     .research .sec-motif { top: 1rem; right: 1rem; }
     .projects .sec-motif { bottom: -2rem; left: -1rem; }
     .resources .sec-motif { top: -2rem; left: 3rem; }
     .music .sec-motif { bottom: -3rem; right: 2rem; }
 
-    /* Motion — restrained (default) vs kinetic */
+    /* Motion */
     html[data-motion="kinetic"] .reveal { transition-duration: .55s; }
     html[data-motion="kinetic"] .reveal:not(.visible) { transform: translateY(52px) scale(.96); }
     html[data-motion="kinetic"] .reveal-stagger > * { transition-duration: .6s; }
@@ -706,19 +695,7 @@
     html[data-motion="kinetic"] .hero-motif { animation-duration: 45s; }
     html[data-motion="kinetic"] .r-card:hover { transform: translateY(-11px) scale(1.008); }
 
-    /* Typography scale — editorial (default, oversized display) vs dense (tighter, denser reading rhythm) */
-    html[data-type="dense"] h1 { font-size: clamp(4.5rem, 11vw, 10rem); line-height: .92; margin-bottom: 2.6rem; }
-    html[data-type="dense"] h2 { font-size: clamp(1.9rem, 3.4vw, 3rem); margin-bottom: 3.2rem; }
-    html[data-type="dense"] body { line-height: 1.5; }
-    html[data-type="dense"] .hero-desc { font-size: .84rem; max-width: 54ch; }
-    html[data-type="dense"] .r-desc, html[data-type="dense"] .p-desc { font-size: .8rem; line-height: 1.55; }
-    html[data-type="dense"] .r-card { padding: 2.1rem 2.3rem; }
-    html[data-type="dense"] .research, html[data-type="dense"] .projects,
-    html[data-type="dense"] .resources, html[data-type="dense"] .gallery,
-    html[data-type="dense"] .music { padding-top: 5.5rem; padding-bottom: 5.5rem; }
-    html[data-type="dense"] .music-sub { font-size: 1.05rem; margin-bottom: 1.5rem; }
-
-    /* Section rhythm — staggered (default, all-paper flow) vs banded (alternating dark/light like the hero) */
+    /* Section rhythm — alternating dark/light like the hero */
     html[data-rhythm="banded"] .projects {
       background: var(--ink); color: var(--cream-mid); border-top-color: var(--rule-dark);
     }
@@ -740,46 +717,6 @@
     html[data-rhythm="banded"] .music h2 em { color: var(--cream-mid); }
     html[data-rhythm="banded"] .music .music-sub { color: var(--cream-mid); }
     html[data-rhythm="banded"] .music .sec-motif { filter: invert(1); }
-
-    /* Tweaks panel chrome */
-    .tweaks { position: fixed; bottom: 1.75rem; right: 1.75rem; z-index: 200; font-family: 'Barlow Condensed', sans-serif; }
-    .tweaks-toggle {
-      background: var(--ink); color: var(--cream);
-      border: 1px solid var(--rule-dark);
-      padding: .6rem 1.15rem;
-      font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
-      cursor: pointer; transition: border-color .2s, color .2s;
-    }
-    .tweaks-toggle:hover { border-color: var(--rust); color: var(--rust); }
-    .tweaks-panel {
-      position: absolute; bottom: calc(100% + .75rem); right: 0;
-      width: 15.5rem;
-      background: var(--ink); border: 1px solid var(--rule-dark);
-      padding: 1.3rem 1.3rem 1.5rem;
-      box-shadow: 0 24px 60px -24px rgba(0,0,0,.55);
-    }
-    .tweaks-panel[hidden] { display: none; }
-    .tweaks-title {
-      font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400;
-      font-size: .98rem; color: var(--cream); margin-bottom: 1.1rem;
-    }
-    .tweaks-group + .tweaks-group { margin-top: 1.1rem; }
-    .tweaks-label {
-      display: block; font-size: .62rem; letter-spacing: .13em; text-transform: uppercase;
-      color: var(--cream-mid); margin-bottom: .5rem;
-    }
-    .tweaks-row { display: flex; gap: .4rem; }
-    .tweaks-opt {
-      flex: 1; background: transparent; border: 1px solid var(--rule-dark); color: var(--cream-mid);
-      font-family: 'Barlow Condensed', sans-serif; font-size: .66rem; letter-spacing: .06em; text-transform: uppercase;
-      padding: .45rem .3rem; cursor: pointer; transition: background .2s, border-color .2s, color .2s;
-    }
-    .tweaks-opt:hover { border-color: var(--rust); color: var(--cream); }
-    .tweaks-opt.active { background: var(--rust); border-color: var(--rust); color: var(--cream); }
-
-    @media (max-width: 480px) {
-      .tweaks-panel { width: 12.5rem; }
-    }
   </style>
 </head>
 <body>
@@ -1804,98 +1741,7 @@
     </div>
   </footer>
 
-  <!-- TWEAKS -->
-  <div class="tweaks" id="tweaks">
-    <div class="tweaks-panel" id="tweaks-panel" hidden>
-      <p class="tweaks-title">Design tweaks</p>
-      <div class="tweaks-group">
-        <span class="tweaks-label">Accent mood</span>
-        <div class="tweaks-row">
-          <button class="tweaks-opt" data-set="mood" data-value="rust">Rust</button>
-          <button class="tweaks-opt" data-set="mood" data-value="slate">Slate</button>
-        </div>
-      </div>
-      <div class="tweaks-group">
-        <span class="tweaks-label">Motif presence</span>
-        <div class="tweaks-row">
-          <button class="tweaks-opt" data-set="motif" data-value="quiet">Quiet</button>
-          <button class="tweaks-opt" data-set="motif" data-value="bold">Layered</button>
-        </div>
-      </div>
-      <div class="tweaks-group">
-        <span class="tweaks-label">Motion</span>
-        <div class="tweaks-row">
-          <button class="tweaks-opt" data-set="motion" data-value="restrained">Restrained</button>
-          <button class="tweaks-opt" data-set="motion" data-value="kinetic">Kinetic</button>
-        </div>
-      </div>
-      <div class="tweaks-group">
-        <span class="tweaks-label">Typography scale</span>
-        <div class="tweaks-row">
-          <button class="tweaks-opt" data-set="type" data-value="editorial">Editorial</button>
-          <button class="tweaks-opt" data-set="type" data-value="dense">Dense</button>
-        </div>
-      </div>
-      <div class="tweaks-group">
-        <span class="tweaks-label">Section rhythm</span>
-        <div class="tweaks-row">
-          <button class="tweaks-opt" data-set="rhythm" data-value="staggered">Staggered</button>
-          <button class="tweaks-opt" data-set="rhythm" data-value="banded">Banded</button>
-        </div>
-      </div>
-      <div class="tweaks-group">
-        <span class="tweaks-label">Card layout</span>
-        <div class="tweaks-row">
-          <button class="tweaks-opt" data-set="cards" data-value="grid">Grid</button>
-          <button class="tweaks-opt" data-set="cards" data-value="list">List</button>
-        </div>
-      </div>
-    </div>
-    <button class="tweaks-toggle" id="tweaks-toggle" aria-expanded="false" aria-controls="tweaks-panel">Tweaks</button>
-  </div>
-
   <script>
-    (function () {
-      var root = document.documentElement;
-      var KEY = 'ml-portfolio-tweaks';
-      var state = { mood: 'rust', motif: 'quiet', motion: 'restrained', type: 'editorial', rhythm: 'staggered', cards: 'grid' };
-      try {
-        var saved = JSON.parse(localStorage.getItem(KEY));
-        if (saved) state = Object.assign(state, saved);
-      } catch (e) {}
-
-      function apply() {
-        root.setAttribute('data-mood', state.mood);
-        root.setAttribute('data-motif', state.motif);
-        root.setAttribute('data-motion', state.motion);
-        root.setAttribute('data-type', state.type);
-        root.setAttribute('data-rhythm', state.rhythm);
-        root.setAttribute('data-cards', state.cards);
-        document.querySelectorAll('.tweaks-opt').forEach(function (btn) {
-          var group = btn.dataset.set;
-          btn.classList.toggle('active', state[group] === btn.dataset.value);
-        });
-      }
-
-      document.querySelectorAll('.tweaks-opt').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          state[btn.dataset.set] = btn.dataset.value;
-          try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
-          apply();
-        });
-      });
-
-      var toggle = document.getElementById('tweaks-toggle');
-      var panel = document.getElementById('tweaks-panel');
-      toggle.addEventListener('click', function () {
-        var open = panel.hasAttribute('hidden');
-        if (open) panel.removeAttribute('hidden'); else panel.setAttribute('hidden', '');
-        toggle.setAttribute('aria-expanded', String(open));
-      });
-
-      apply();
-    })();
-
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 60);
